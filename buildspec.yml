@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 5.0  # Adjust according to your .NET version
+    commands:
+      - echo Installing .NET Core SDK...
+      - dotnet --version  # Check the installed .NET version
+  pre_build:
+    commands:
+      - echo Restoring dependencies...
+      - dotnet restore
+  build:
+    commands:
+      - echo Building the project...
+      - dotnet build --configuration Release
+  post_build:
+    commands:
+      - echo Running tests...
+      - dotnet test --configuration Release
+      - echo Publishing the application...
+      - dotnet publish --configuration Release --output ./publish
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'publish'
